@@ -1,0 +1,46 @@
+import cv2
+import numpy as np
+from sklearn.cluster import KMeans
+img = cv2.imread('D:/images/bb.webp')
+print(img.shape)
+height , width ,channels = img.shape
+width_tile = 50
+height_tile = 10
+
+# drawing lines for the width
+count = 0
+for i in range(0,width,width_tile):
+    count += 1
+    cv2.line(img,(i,0),(i,height),(0,0,255),1)
+print(count)
+# drawing lines for height
+count = 0
+for j in range(0,height-3,height_tile):
+    count += 1
+    cv2.line(img,(0,j),(width,j),(0,0,255),1)
+    # if count == 33:
+    #     break
+cv2.imshow("image",img)
+cv2.waitKey(0)
+print(count)
+
+tiles = []
+for index,i in enumerate(range(0,height-3,height_tile)):
+    for ind,j in enumerate(range(0,width,width_tile)):
+        tile = img[i:i+height_tile , j:j+width_tile]
+        flattened_tile = tile.flatten()
+        tiles.append(flattened_tile)
+tiles_arr = np.array(tiles)
+k = 330
+kmeans = KMeans(330)
+kmeans.fit(tiles_arr)
+centroids = kmeans.cluster_centers_
+labels = kmeans.labels_
+
+print('Centroids coordinates::')
+print(centroids)
+
+
+print("\n Cluster Assignment")
+print(labels)
+print(np.max(labels))
