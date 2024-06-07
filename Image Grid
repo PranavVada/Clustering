@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+
+img = cv2.imread('D:/images/bb.webp')
+print(img.shape)
+height , width ,channels = img.shape
+width_tile = 10
+height_tile = 10
+
+# drawing lines for the width
+count = 0
+for i in range(0,width,width_tile):
+    count += 1
+    cv2.line(img,(i,0),(i,height),(0,0,255),1)
+print(count)
+# drawing lines for height
+count = 0
+for j in range(0,height,height_tile):
+    count += 1
+    cv2.line(img,(0,j),(width,j),(0,0,255),1)
+cv2.imshow("image",img)
+cv2.waitKey(0)
+print(count)
+
+tiles = []
+for i in range(0,height+height_tile,height_tile):
+    for j in range(0,width+width_tile,width_tile):
+        tile = img[i:i+height_tile , j:j+width_tile]
+        flattened_tile = tile.flatten()
+        tiles.append(list)
+
+list[0]
